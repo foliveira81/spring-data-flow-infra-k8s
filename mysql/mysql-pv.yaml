@@ -1,0 +1,32 @@
+---
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  namespace: spring-cloud-dataflow
+  name: nfs-mysql-pv
+  annotations:
+    field.cattle.io/description: NFS para base de dados Mysql
+spec:
+  accessModes:
+  - ReadWriteOnce
+  capacity:
+    storage: 100Gi
+  nfs:
+    path: /exportfs4/k8s-lab/scdf/mysql
+    server: rjstrgdesen-02.spcdc.br
+  persistentVolumeReclaimPolicy: Retain
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  namespace: spring-cloud-dataflow
+  name: nfs-mysql-pvc
+spec:
+  accessModes:
+    - ReadWriteMany
+  storageClassName: ""
+  resources:
+    requests:
+      storage: 100Gi
+  volumeMode: Filesystem
+  volumeName: nfs-mysql-pv

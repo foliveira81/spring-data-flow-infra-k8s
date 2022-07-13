@@ -1,0 +1,52 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    field.cattle.io/publicEndpoints: '[{"addresses":["10.198.33.50","10.198.33.51","10.198.33.52"],"port":80,"protocol":"HTTP","serviceName":"spring-cloud-dataflow:scdf-server","ingressName":"spring-cloud-dataflow:spring-cloud-dataflow-ingress","hostname":"lab-spring-dataflow.spcdc.org.br","path":"/","allNodes":false}]'
+  creationTimestamp: "2022-07-12T01:23:44Z"
+  generation: 1
+  managedFields:
+  - apiVersion: networking.k8s.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:field.cattle.io/publicEndpoints: {}
+      f:spec:
+        f:rules: {}
+    manager: agent
+    operation: Update
+    time: "2022-07-12T01:24:29Z"
+  - apiVersion: networking.k8s.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:loadBalancer:
+          f:ingress: {}
+    manager: nginx-ingress-controller
+    operation: Update
+    subresource: status
+    time: "2022-07-12T01:24:29Z"
+  name: spring-cloud-dataflow-ingress
+  namespace: spring-cloud-dataflow
+  resourceVersion: "18954941"
+  uid: 0f91491c-3dd3-4590-8a2f-cd02d37c7bc7
+spec:
+  rules:
+  - host: lab-spring-dataflow.spcdc.org.br
+    http:
+      paths:
+      - backend:
+          service:
+            name: scdf-server
+            port:
+              number: 8092
+        path: /
+        pathType: Prefix
+status:
+  loadBalancer:
+    ingress:
+    - ip: 10.198.33.50
+    - ip: 10.198.33.51
+    - ip: 10.198.33.52
